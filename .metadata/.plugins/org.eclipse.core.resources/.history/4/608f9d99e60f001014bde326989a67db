@@ -1,0 +1,14 @@
+
+#hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL8Dialect
+
+#mysql
+spring.datasource.url=jdbc:mysql://localhost:3306/pruebaCiva?useSSL=false&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&serverTimezone=UTC&jdbcCompliantTruncation=false
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username=root
+spring.datasource.password=Cibertec2023
+
+spring.web.resources.static-locations=classpath:/static/
+
+debug=true

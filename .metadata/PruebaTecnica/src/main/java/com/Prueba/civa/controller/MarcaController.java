@@ -1,4 +1,4 @@
-package com.Prueba.civa.controller;
+package com.Prueba.civa.controller;	
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

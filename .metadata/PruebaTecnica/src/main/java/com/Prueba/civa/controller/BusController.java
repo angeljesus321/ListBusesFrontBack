@@ -11,11 +11,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/bus")
+@RequestMapping("/api/buses")
 public class BusController {
+	 @Autowired
+	    private BusServices busService;
+	
 	private final BusServices busServices;
 	 @GetMapping
 	    @ResponseStatus(HttpStatus.OK)

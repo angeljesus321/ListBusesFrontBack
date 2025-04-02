@@ -13,11 +13,11 @@
     <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
     <fullyQualifiedTypeName name="com.Prueba.civa.model.MarcaBus"/>
     <fullyQualifiedTypeName name="com.Prueba.civa.repository.MarcaRepository"/>
-    <fullyQualifiedTypeName name="com.Prueba.civa.services.BusServices"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonBackReference"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.Prueba.civa.repository.BusRepository"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Pageable"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+    <fullyQualifiedTypeName name="com.Prueba.civa.services.BusServices"/>
 </qualifiedTypeNameHistroy>
