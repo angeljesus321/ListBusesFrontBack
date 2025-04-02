@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Buses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #buses-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 6px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Buses</h1>
+    
+    <div id="buses-container">
+        <p class="loading">Cargando...</p>
+    </div>
+    
+    <div class="pagination">
+        <button id="prev-page" disabled>Anterior</button>
+        <span id="page-info">Página 1</span>
+        <button id="next-page">Siguiente</button>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentPage = 0;
+        let totalPages = 0;
+        
+        // Función para obtener las credenciales en Base64
+        function getAuthHeader() {
+            const username = 'user';
+            const password = 'user123';
+            const credentials = btoa(`${username}:${password}`);
+            return `Basic ${credentials}`;
+        }
+        
+        // Función para cargar los buses
+        async function loadBuses(page = 0) {
+            const container = document.getElementById('buses-container');
+            container.innerHTML = '<p class="loading">Cargando...</p>';
+            
+            try {
+                const response = await fetch(`/bus?page=${page}&size=5`, {
+                    headers: {
+                        'Authorization': getAuthHeader()
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                totalPages = data.totalPages;
+                
+                // Actualizar paginación
+                document.getElementById('prev-page').disabled = page === 0;
+                document.getElementById('next-page').disabled = page >= totalPages - 1;
+                document.getElementById('page-info').textContent = `Página ${page + 1} de ${totalPages}`;
+                
+                // Verificar si hay contenido
+                if (data.content && data.content.length > 0) {
+                    // Crear tabla
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Placa</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Año</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    // Agregar filas
+                    data.content.forEach(bus => {
+                        html += `
+                            <tr>
+                                <td>${bus.id}</td>
+                                <td>${bus.placa || 'N/A'}</td>
+                                <td>${bus.marca?.nombre || 'N/A'}</td>
+                                <td>${bus.caracteristicas || 'N/A'}</td>
+                                <td>${bus.fecha_creacion || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += `
+                            </tbody>
+                        </table>
+                    `;
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p>No se encontraron buses.</p>';
+                }
+            } catch (error) {
+                console.error('Error al cargar los buses:', error);
+                container.innerHTML = `<p class="error">Error al cargar los buses: ${error.message}</p>`;
+            }
+        }
+        
+        // Configurar eventos de paginación
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                loadBuses(currentPage);
+            }
+        });
+        
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                loadBuses(currentPage);
+            }
+        });
+        
+        // Cargar buses cuando se carga la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBuses();
+        });
+    </script>
+</body>
+</html>

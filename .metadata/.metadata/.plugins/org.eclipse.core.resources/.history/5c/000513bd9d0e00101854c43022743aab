@@ -1,0 +1,14 @@
+package com.Prueba.civa.model;
+
+public enum MarcaBus {
+	VOLVO, SCANIA, FIAT, MERCEDES, MAN, OTRO;
+	
+	public static MarcaBus fromString(String value) {
+        for (MarcaBus marca : MarcaBus.values()) {
+            if (marca.name().equalsIgnoreCase(value.trim())) {
+                return marca;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for value: " + value);
+    }
+}

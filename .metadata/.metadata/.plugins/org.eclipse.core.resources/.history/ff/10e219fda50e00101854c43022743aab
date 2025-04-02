@@ -1,0 +1,39 @@
+package com.Prueba.civa.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.Prueba.civa.model.Bus;
+import com.Prueba.civa.services.BusServices;
+
+
+@RestController
+@RequestMapping("/bus")
+public class BusController {
+	private final BusServices busService;
+
+	 @GetMapping
+	    @ResponseStatus(HttpStatus.OK)
+	    public Page<Bus> findAll(Pageable pageable){
+	        return BusService.findAll(pageable);
+	    }
+
+    // GET /bus/{id} - Obtiene un bus por ID
+	 @GetMapping("{id}")
+	    public ResponseEntity<Bus> findById(@PathVariable Integer id){
+	        return ResponseEntity.of(BusService.findById(id));
+	    }
+    ////////////////7
+    
+    
+   
+}

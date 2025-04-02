@@ -1,0 +1,13 @@
+package com.Prueba.civa.repository;
+
+import java.awt.print.Pageable;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.Prueba.civa.model.Bus;
+@Repository
+public interface BusRepository extends JpaRepository<Bus, Long> {
+    Page<Bus> findAll(Pageable pageable); // Agregar esto explícitamente
+}

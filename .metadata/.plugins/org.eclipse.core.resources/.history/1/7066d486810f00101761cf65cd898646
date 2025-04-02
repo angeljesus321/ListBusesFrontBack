@@ -1,0 +1,5 @@
+package com.Prueba.civa;
+
+public class CorsConfig {
+
+}

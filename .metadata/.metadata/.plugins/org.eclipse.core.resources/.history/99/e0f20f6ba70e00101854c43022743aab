@@ -1,0 +1,22 @@
+package com.Prueba.civa.services;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.Prueba.civa.repository.BusRepository;
+
+public interface BusServices {
+	private final BusRepository busRepository;
+
+    public BusServices(BusRepository busRepository) {
+        this.busRepository = busRepository;
+    }
+
+    public List<Bus> getAllBuses() {
+        return busRepository.findAll();
+    }
+
+    public Optional<Bus> getBusById(Long id) {
+        return busRepository.findById(id);
+    }
+    Page<Bus> findAll(Pageable pageable);
+    Optional<Bus> findById(Integer id);
+}
